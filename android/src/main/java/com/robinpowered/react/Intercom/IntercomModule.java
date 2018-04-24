@@ -25,6 +25,7 @@ public class IntercomModule extends ReactContextBaseJavaModule {
 
     private static final String MODULE_NAME = "IntercomWrapper";
     public static final String TAG = "Intercom";
+    private final IntercomPushClient intercomPushClient = new IntercomPushClient();
 
     public IntercomModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -60,6 +61,11 @@ public class IntercomModule extends ReactContextBaseJavaModule {
         Intercom.client().registerUnidentifiedUser();
         Log.i(TAG, "registerUnidentifiedUser");
         callback.invoke(null, null);
+    }
+
+    @ReactMethod
+    public void sendTokenToIntercom(String refreshedToken) {
+        intercomPushClient.sendTokenToIntercom(getApplication(), refreshedToken);
     }
 
     @ReactMethod
